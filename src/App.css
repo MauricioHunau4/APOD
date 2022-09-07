@@ -7,6 +7,10 @@ body{
   background-color: #121D3B;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .css-heg063-MuiTabs-flexContainer{
   justify-content: center!important;
 }
@@ -14,10 +18,6 @@ body{
 #explanation{
   color: "white";
   width:"700px"
-}
-
-body::-webkit-scrollbar {
-  display: none;
 }
 
 .authors{
@@ -34,3 +34,6 @@ body::-webkit-scrollbar {
   outline-width: 0!important;
 }
 
+.APODimage{
+  cursor: pointer;
+}

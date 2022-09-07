@@ -1,12 +1,13 @@
 import './App.css';
 import Main from './components/main';
-import AppBar from './components/appBar';
+import APODBar from './components/APODBar';
 
 
 function App() {
+  sessionStorage.clear()
   return (
     <>
-      <AppBar />
+      <APODBar />
       <Main />
     </>
   );

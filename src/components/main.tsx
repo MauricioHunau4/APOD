@@ -5,12 +5,13 @@ import InformationAPOD from './InformationAPOD';
 
 import {
   Box,
+  Button,
   Container,
   Tabs,
   Tab,
-  TextField,
-  
+  TextField
 } from '@mui/material'
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -20,12 +21,12 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
+  let today: Date = new Date();
 
   const [information, setInformation] = useState<Information>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
-  const [dateAPI, setDateAPI] = useState()
-
+  const [dateAPI, setDateAPI] = useState<number|string>()
   const [infoPerSearch, setInfoPerSearch] = useState<Information>()
 
   useEffect(() => {
@@ -40,7 +41,6 @@ function TabPanel(props: TabPanelProps) {
           .then((data) => {
             setLoading(false);
             setInformation(data)
-            localStorage.setItem("information", JSON.stringify(data))
           })
           .catch((err) => {
             setError(true);
@@ -68,9 +68,9 @@ function TabPanel(props: TabPanelProps) {
               return res.json();
             })
             .then((data) => {
+              sessionStorage.setItem("info", `${data.explanation}` )
               setLoading(false);
               setInfoPerSearch(data);
-              localStorage.setItem("information", JSON.stringify(data))
             })
             .catch((err)=>{
               setError(true);
@@ -78,12 +78,22 @@ function TabPanel(props: TabPanelProps) {
             })
           }
           prueba() 
+          
       } catch (error) {
           console.log(error)
         }
     }
   }, [dateAPI])
 
+  const random = (e: any) =>{
+    e.preventDefault();
+    const year = Math.floor(Math.random() * (today.getFullYear() - 1995) + 1995)
+    const day = Math.floor(Math.random() * (29 - 1) + 1)
+    const month = Math.floor(Math.random() * (13 - 1) + 1)
+
+    setDateAPI(`${year}-${month}-${day}`)
+  }
+  console.log(infoPerSearch?.explanation)
   return (
     <div
       role="tabpanel"
@@ -94,16 +104,19 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === 0 && (<>
       <Box sx={{ textAlign: "center", padding: "20px 0" }}>
+        <Box sx={{display: "flex", justifyContent:"center", gap:" 10px"}}>
         <TextField
           id="date"
           type="date"
-          defaultValue={information?.date}
+          defaultValue={dateAPI}
           sx={{ width: 220 }}
           onChange={handleChange}
           InputLabelProps={{
             shrink: true,
           }}
         />
+        <Button variant="contained" onClick={random} sx={{bgcolor:"#253D7D"}}>Random</Button>
+        </Box>
         <Api 
           date={information?.date}
           title={information?.title}
@@ -117,7 +130,7 @@ function TabPanel(props: TabPanelProps) {
       </>
       )}
       {value === 1 && (
-        <InformationAPOD explanation={information?.explanation} searchExplanation={infoPerSearch?.explanation} />
+        <InformationAPOD explanation={information?.explanation} explanationSearch={infoPerSearch?.explanation}/>
       )}
     </div>
   );

@@ -16,6 +16,7 @@ const Api = (props: InformationNASA) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
     const handleClose = () => setOpen(!open);
+    
     return (
         <>
             {props.loading ?
@@ -46,15 +47,15 @@ const Api = (props: InformationNASA) => {
                             {props.searchDate === undefined ? props.title : props.searchTitle}
                         </Typography>
                     </Box>
-                    <Box sx={{ height: "auto", justifyContent: "center", margin: "0 0 30px 0", cursor: "pointer" }} onClick={handleOpen}>
+                    <Box sx={{ height: "auto", justifyContent: "center", margin: "0 0 30px 0" }} >
                         <img src={props.searchDate === undefined ? props.url : props.searchUrl}
-                            alt="APOD">
+                            alt="APOD" onClick={handleOpen} className="APODimage">
                         </img>
                     </Box>
                     <Modal
                         open={open}
                         onClose={handleClose}>
-                        <Box sx={style}>
+                        <Box sx={style} className="animate__animated animate__fadeIn">
                         <img src={props.searchDate === undefined ? props.url : props.searchUrl}
                             alt="APODModal">
                         </img>
