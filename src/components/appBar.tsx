@@ -13,7 +13,7 @@ function appBar() {
             <AppBar position="static" sx={{ bgcolor: "#253D7D", textAlign: "center", alignItems: "center" }}>
                 <Toolbar>
                     <Box sx={{ display :"flex", alignItems:"center", gap: "5px"}}>
-                        <SatelliteAltIcon sx={{fontSize: "3.5rem"}} />
+                        <SatelliteAltIcon sx={{fontSize: "3.5rem", cursor:"pointer"}} className="animate__animated animate__pulse animate__infinite"/>
                         <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                             APOD
                         </Typography >
@@ -25,6 +25,3 @@ function appBar() {
 }
 
 export default appBar
-
-//#253D7D
-//#1C2E5E

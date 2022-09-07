@@ -1,6 +1,6 @@
 import React, { useState, SyntheticEvent, useEffect } from 'react';
 import Api from './Api';
-import {Information} from '../Interfaces'
+import { Information } from '../Interfaces'
 import InformationAPOD from './InformationAPOD';
 
 import {
@@ -8,6 +8,8 @@ import {
   Container,
   Tabs,
   Tab,
+  TextField,
+  
 } from '@mui/material'
 
 interface TabPanelProps {
@@ -20,38 +22,68 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   const [information, setInformation] = useState<Information>()
-
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [dateAPI, setDateAPI] = useState()
 
-  const getAPI = async () => {
+  const [infoPerSearch, setInfoPerSearch] = useState<Information>()
 
-    setLoading(true);
-    setError(false);
-    
-    try {
-      await fetch(`https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_API_KEY}`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setLoading(false);
-        setInformation(data)
-        localStorage.setItem("information", JSON.stringify(data))
-      })
-      .catch((err) => {
-        setError(true);
-        setLoading(false);
-      }) 
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  
   useEffect(() => {
+    const getAPI = async () => {
+      setLoading(true);
+      setError(false);
+      try {
+        await fetch(`https://api.nasa.gov/planetary/apod?&api_key=${process.env.REACT_APP_API_KEY}`)
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            setLoading(false);
+            setInformation(data)
+            localStorage.setItem("information", JSON.stringify(data))
+          })
+          .catch((err) => {
+            setError(true);
+            setLoading(false);
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    }
     getAPI()
   }, [])
-  
+
+  const handleChange = (e: any) => {
+    setDateAPI(e.target.value)
+  }
+
+  useEffect(() => {
+    if (dateAPI !== undefined) {
+      setLoading(true);
+      setError(false);
+      try {
+      const prueba = async () => {
+          await fetch(`https://api.nasa.gov/planetary/apod?date=${dateAPI}&api_key=${process.env.REACT_APP_API_KEY}`)
+            .then((res) => {
+              return res.json();
+            })
+            .then((data) => {
+              setLoading(false);
+              setInfoPerSearch(data);
+              localStorage.setItem("information", JSON.stringify(data))
+            })
+            .catch((err)=>{
+              setError(true);
+            setLoading(false);
+            })
+          }
+          prueba() 
+      } catch (error) {
+          console.log(error)
+        }
+    }
+  }, [dateAPI])
+
   return (
     <div
       role="tabpanel"
@@ -60,15 +92,32 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === 0 && (
-        <Api date={information?.date} 
-        title={information?.title} 
-        image={information?.url}
-        loading={loading} 
-        error={error} />
+      {value === 0 && (<>
+      <Box sx={{ textAlign: "center", padding: "20px 0" }}>
+        <TextField
+          id="date"
+          type="date"
+          defaultValue={information?.date}
+          sx={{ width: 220 }}
+          onChange={handleChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <Api 
+          date={information?.date}
+          title={information?.title}
+          url={information?.url}
+          searchDate={infoPerSearch?.date}
+          searchTitle={infoPerSearch?.title}
+          searchUrl={infoPerSearch?.url}
+          loading={loading}
+          error={error} />
+      </Box>
+      </>
       )}
       {value === 1 && (
-          <InformationAPOD explanation={information?.explanation}/>
+        <InformationAPOD explanation={information?.explanation} searchExplanation={infoPerSearch?.explanation} />
       )}
     </div>
   );
@@ -87,18 +136,18 @@ function Main() {
     setValue(newValue);
   };
   return (
-      <Box sx={{ width: '100%', position: "absolute", bgcolor:"#121D3B" }}>
-        <Box sx={{ borderBottom: 1, border: 'none' }}>
-          <Tabs value={value} onChange={handleChange}  >
-            <Tab label="Astronomy photo of the day" {...a11yProps(0)} sx={{ color: "white", width: "20rem" }} />
-            <Tab label="Explanation" {...a11yProps(1)} sx={{ color: "white", width: "20rem" }} />
-          </Tabs>
-        </Box>
-        <Container>
-          <TabPanel value={value} index={0}/>
-          <TabPanel value={value} index={1}/>
-        </Container>
+    <Box sx={{ width: '100%', position: "absolute", bgcolor: "#121D3B" }}>
+      <Box sx={{ borderBottom: 1, border: 'none' }}>
+        <Tabs value={value} onChange={handleChange}  >
+          <Tab label="Astronomy photo of the day" {...a11yProps(0)} sx={{ color: "white", width: "20rem" }} />
+          <Tab label="Explanation" {...a11yProps(1)} sx={{ color: "white", width: "20rem" }} />
+        </Tabs>
       </Box>
+      <Container>
+        <TabPanel value={value} index={0} />
+        <TabPanel value={value} index={1} />
+      </Container>
+    </Box>
 
   )
 }

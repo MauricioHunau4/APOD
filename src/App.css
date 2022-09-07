@@ -8,8 +8,7 @@ body{
 }
 
 .css-heg063-MuiTabs-flexContainer{
-    justify-content: center!important;
-    
+  justify-content: center!important;
 }
 
 #explanation{
@@ -17,6 +16,21 @@ body{
   width:"700px"
 }
 
-.css-1d3z3hw-MuiOutlinedInput-notchedOutline{
-  border-color:white!important;
+body::-webkit-scrollbar {
+  display: none;
 }
+
+.authors{
+  text-decoration: underline;
+  color: whitesmoke;
+}
+
+.css-e13as6-MuiFormControl-root-MuiTextField-root{
+  background-color: whitesmoke;
+  border-radius: 5px;
+}
+
+.css-fgawi1:focus-visible{
+  outline-width: 0!important;
+}
+

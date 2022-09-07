@@ -10,7 +10,11 @@ export interface Information {
 export interface InformationNASA {
     date: string | undefined,
     title: string| undefined,
+    url:string| undefined,
     loading:boolean| undefined,
     error:boolean| undefined,
-    image:string| undefined
+    searchDate: string | undefined,
+    searchTitle: string | undefined,
+    searchUrl: string | undefined,
 }
+
