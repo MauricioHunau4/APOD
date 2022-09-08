@@ -14,8 +14,8 @@ const style = {
 const Api = (props: InformationNASA) => {
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(!open);
-    const handleClose = () => setOpen(!open);
+
+    const handleOpenClose = () => setOpen(!open)
     
     return (
         <>
@@ -49,12 +49,12 @@ const Api = (props: InformationNASA) => {
                     </Box>
                     <Box sx={{ height: "auto", justifyContent: "center", margin: "0 0 30px 0" }} >
                         <img src={props.searchDate === undefined ? props.url : props.searchUrl}
-                            alt="APOD" onClick={handleOpen} className="APODimage">
+                            alt="APOD" onClick={handleOpenClose} className="APODimage">
                         </img>
                     </Box>
                     <Modal
                         open={open}
-                        onClose={handleClose}>
+                        onClose={handleOpenClose}>
                         <Box sx={style} className="animate__animated animate__fadeIn">
                         <img src={props.searchDate === undefined ? props.url : props.searchUrl}
                             alt="APODModal">

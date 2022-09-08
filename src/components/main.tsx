@@ -72,7 +72,7 @@ function TabPanel(props: TabPanelProps) {
               setLoading(false);
               setInfoPerSearch(data);
             })
-            .catch((err)=>{
+            .catch(()=>{
               setError(true);
             setLoading(false);
             })
@@ -93,7 +93,7 @@ function TabPanel(props: TabPanelProps) {
 
     setDateAPI(`${year}-${month}-${day}`)
   }
-  console.log(infoPerSearch?.explanation)
+
   return (
     <div
       role="tabpanel"

@@ -22,8 +22,8 @@ function GameNASA() {
     const clickStar = ()=> {
         setAnimationStar("animate__animated animate__fadeOut")
         setTimeout(()=>{
-        setPositionTop(Math.floor(Math.random() * (87 - 0) + 0).toString())
-        setPositionLeft(Math.floor(Math.random() * (95 - 0) + 0).toString())
+        setPositionTop(Math.floor(Math.random() * (87)).toString())
+        setPositionLeft(Math.floor(Math.random() * (95)).toString())
         setCount(count + 1)
         setAnimationStar("animate__animated animate__fadeIn")
         if (count === 8) {

@@ -4,7 +4,6 @@ import { Box, Typography } from '@mui/material'
 
 function InformationAPOD(props : any) {
   let explanation = sessionStorage.getItem("info")
-  console.log(explanation)
   return (<>
     <Box sx={{textAlign:"center", width:"auto", height:"auto", border:" 1px solid grey", padding:"40px", margin:"40px 0 0 0"}}>
         <Typography variant="h3" sx={{color: "white"}}>Explanation of the day</Typography>
