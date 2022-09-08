@@ -21,12 +21,13 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
+
   let today: Date = new Date();
 
   const [information, setInformation] = useState<Information>()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [dateAPI, setDateAPI] = useState<number|string>()
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
+  const [dateAPI, setDateAPI] = useState<number | string>()
   const [infoPerSearch, setInfoPerSearch] = useState<Information>()
 
   useEffect(() => {
@@ -47,7 +48,7 @@ function TabPanel(props: TabPanelProps) {
             setLoading(false);
           })
       } catch (error) {
-        console.log(error)
+        setLoading(false)
       }
     }
     getAPI()
@@ -62,30 +63,30 @@ function TabPanel(props: TabPanelProps) {
       setLoading(true);
       setError(false);
       try {
-      const prueba = async () => {
+        const prueba = async () => {
           await fetch(`https://api.nasa.gov/planetary/apod?date=${dateAPI}&api_key=${process.env.REACT_APP_API_KEY}`)
             .then((res) => {
               return res.json();
             })
             .then((data) => {
-              sessionStorage.setItem("info", `${data.explanation}` )
+              sessionStorage.setItem("info", `${data.explanation}`)
               setLoading(false);
               setInfoPerSearch(data);
             })
-            .catch((err)=>{
+            .catch(() => {
               setError(true);
-            setLoading(false);
+              setLoading(false);
             })
-          }
-          prueba() 
-          
-      } catch (error) {
-          console.log(error)
         }
+        prueba()
+
+      } catch (error) {
+        setLoading(false)
+      }
     }
   }, [dateAPI])
 
-  const random = (e: any) =>{
+  const random = (e: any) => {
     e.preventDefault();
     const year = Math.floor(Math.random() * (today.getFullYear() - 1995) + 1995)
     const day = Math.floor(Math.random() * (29 - 1) + 1)
@@ -93,7 +94,7 @@ function TabPanel(props: TabPanelProps) {
 
     setDateAPI(`${year}-${month}-${day}`)
   }
-  console.log(infoPerSearch?.explanation)
+
   return (
     <div
       role="tabpanel"
@@ -103,34 +104,37 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === 0 && (<>
-      <Box sx={{ textAlign: "center", padding: "20px 0" }}>
-        <Box sx={{display: "flex", justifyContent:"center", gap:" 10px"}}>
-        <TextField
-          id="date"
-          type="date"
-          defaultValue={dateAPI}
-          sx={{ width: 220 }}
-          onChange={handleChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <Button variant="contained" onClick={random} sx={{bgcolor:"#253D7D"}}>Random</Button>
+        <Box sx={{ textAlign: "center", padding: "20px 0" }}>
+          <Box sx={{ display: "flex", justifyContent: "center", gap: " 10px" }}>
+            <TextField
+              id="date"
+              type="date"
+              defaultValue={dateAPI}
+              sx={{ width: 220 }}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <Button variant="contained" onClick={random} sx={{ bgcolor: "#253D7D" }}>Random</Button>
+          </Box>
+          <Api
+            date={information?.date}
+            title={information?.title}
+            url={information?.url}
+            searchDate={infoPerSearch?.date}
+            searchTitle={infoPerSearch?.title}
+            searchUrl={infoPerSearch?.url}
+            loading={loading}
+            error={error} />
         </Box>
-        <Api 
-          date={information?.date}
-          title={information?.title}
-          url={information?.url}
-          searchDate={infoPerSearch?.date}
-          searchTitle={infoPerSearch?.title}
-          searchUrl={infoPerSearch?.url}
-          loading={loading}
-          error={error} />
-      </Box>
       </>
       )}
       {value === 1 && (
-        <InformationAPOD explanation={information?.explanation} explanationSearch={infoPerSearch?.explanation}/>
+        <InformationAPOD
+          explanation={information?.explanation}
+          explanationSearch={infoPerSearch?.explanation}
+        />
       )}
     </div>
   );
@@ -143,17 +147,17 @@ function a11yProps(index: number) {
 }
 
 function Main() {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState <number> (0);
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
   return (
     <Box sx={{ width: '100%', position: "absolute", bgcolor: "#121D3B" }}>
-      <Box sx={{ borderBottom: 1, border: 'none' }}>
+      <Box sx={{ borderBottom: 1, border: 'none', textAlign: "center" }}>
         <Tabs value={value} onChange={handleChange}  >
-          <Tab label="Astronomy photo of the day" {...a11yProps(0)} sx={{ color: "white", width: "20rem" }} />
-          <Tab label="Explanation" {...a11yProps(1)} sx={{ color: "white", width: "20rem" }} />
+          <Tab label="Astronomy photo of the day" className='Tabs' {...a11yProps(0)} sx={{ color: "white", width: "20rem" }} />
+          <Tab label="Explanation" {...a11yProps(1)} className='Tabs' sx={{ color: "white", width: "20rem" }} />
         </Tabs>
       </Box>
       <Container>

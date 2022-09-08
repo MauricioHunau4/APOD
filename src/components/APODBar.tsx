@@ -13,9 +13,9 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 function APODBar() {
-    const [backgroundChange, setBacgroundChange] = useState("none")
-    const [animationbg, setAnimationBg] = useState("")
-    const [animationSatellite, setAnimationSatellite] = useState("animate__animated animate__pulse animate__infinite")
+    const [backgroundChange, setBacgroundChange] = useState<string>("none")
+    const [animationbg, setAnimationBg] = useState<string>("")
+    const [animationSatellite, setAnimationSatellite] = useState<string>("animate__animated animate__pulse animate__infinite")
    
 
     const gameNASA = () => {

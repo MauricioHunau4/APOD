@@ -13,9 +13,8 @@ const style = {
 
 const Api = (props: InformationNASA) => {
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(!open);
-    const handleClose = () => setOpen(!open);
+    const [open, setOpen] = useState<boolean>(false);
+    const handleOpenClose = () => setOpen(!open);
     
     return (
         <>
@@ -39,7 +38,7 @@ const Api = (props: InformationNASA) => {
                     zIndex: -1
                 }}>
 
-                    <Box sx={{ padding: "100px 0 10px 0" }}>
+                    <Box sx={{ padding: "100px 0 10px 0" }} className="box-query">
                         <Typography variant="h5" sx={{ color: "white" }}>
                             {props.searchDate === undefined ? props.date : props.searchDate}
                         </Typography>
@@ -49,15 +48,15 @@ const Api = (props: InformationNASA) => {
                     </Box>
                     <Box sx={{ height: "auto", justifyContent: "center", margin: "0 0 30px 0" }} >
                         <img src={props.searchDate === undefined ? props.url : props.searchUrl}
-                            alt="APOD" onClick={handleOpen} className="APODimage">
+                            alt="APOD" onClick={handleOpenClose} className="APODimage">
                         </img>
                     </Box>
                     <Modal
                         open={open}
-                        onClose={handleClose}>
+                        onClose={handleOpenClose}>
                         <Box sx={style} className="animate__animated animate__fadeIn">
                         <img src={props.searchDate === undefined ? props.url : props.searchUrl}
-                            alt="APODModal">
+                            alt="APODModal" className="APODimage" >
                         </img>
                         </Box>
                     </Modal>

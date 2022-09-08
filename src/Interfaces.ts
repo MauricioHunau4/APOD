@@ -17,3 +17,8 @@ export interface InformationNASA {
     searchTitle: string | undefined,
     searchUrl: string | undefined,
 }
+
+export interface Explanation {
+    explanation: string | undefined,
+    explanationSearch: string | undefined,
+}

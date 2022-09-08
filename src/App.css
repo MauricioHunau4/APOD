@@ -37,3 +37,43 @@ body::-webkit-scrollbar {
 .APODimage{
   cursor: pointer;
 }
+
+@media screen and (max-width: 600px) {
+  .Tabs{
+    max-width: 11rem!important;
+  }
+  .box-query{
+    padding:120px 0 20px 0!important;
+  }
+  .APODimage{
+    width: 380px!important;
+  }
+  .typography-query{
+    left: 0%!important
+  }
+  .box-information-query{
+    text-align: left!important;
+    text-overflow: clip;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .APODimage{
+    width: 750px!important;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .APODimage{
+    width: 500px!important;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .Tabs{
+    max-width: 9rem!important;
+  }
+  .APODimage{
+    width: 270px!important;
+  }
+}

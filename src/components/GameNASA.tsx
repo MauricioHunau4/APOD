@@ -11,19 +11,19 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 function GameNASA() {
 
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState<number>(0)
 
-    const [positionTop, setPositionTop] = useState("45")
-    const [positionLeft, setPositionLeft] = useState("45")
-    const [colorStar, setColorStar] = useState("white")
-    const [finishGame, setFinishGame] = useState(false)
-    const [animationStar, setAnimationStar] = useState("animate__animated animate__fadeIn")
+    const [positionTop, setPositionTop] = useState<string>("45")
+    const [positionLeft, setPositionLeft] = useState<string>("45")
+    const [colorStar, setColorStar] = useState<string>("white")
+    const [finishGame, setFinishGame] = useState<boolean>(false)
+    const [animationStar, setAnimationStar] = useState<string>("animate__animated animate__fadeIn")
 
     const clickStar = ()=> {
         setAnimationStar("animate__animated animate__fadeOut")
         setTimeout(()=>{
-        setPositionTop(Math.floor(Math.random() * (87 - 0) + 0).toString())
-        setPositionLeft(Math.floor(Math.random() * (95 - 0) + 0).toString())
+        setPositionTop(Math.floor(Math.random() * (87)).toString())
+        setPositionLeft(Math.floor(Math.random() * (95)).toString())
         setCount(count + 1)
         setAnimationStar("animate__animated animate__fadeIn")
         if (count === 8) {
@@ -95,7 +95,9 @@ function GameNASA() {
             bottom: 0,
             right: 0,
             zIndex: 1,
-        }}>Stars Count: {count
+        }}
+        className="typography-query"
+        >Stars Count: {count
             }</Typography>
         {!finishGame ?
             <Box sx={{
@@ -106,7 +108,8 @@ function GameNASA() {
                 bottom: 0,
             }}>
                 {changeStar()}   
-            </Box> : <Typography variant="h4" sx={{
+            </Box> : 
+            <Typography variant="h4" sx={{
                 color: "whitesmoke",
                 position: "relative",
                 top: "45%",
